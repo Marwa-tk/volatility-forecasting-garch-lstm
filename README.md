@@ -88,9 +88,9 @@ volatility-forecasting-garch-lstm/
 | Membre         | Rôle principal                                           | Tâches techniques principales |
 |----------------|----------------------------------------------------------|-------------------------------|
 | **Basma Regragui** | Exploration & Préparation des données | - Téléchargement des données (S&P 500, Bitcoin) via `yfinance`<br>- Calcul des rendements logarithmiques<br>- Tests de stationnarité (ADF, KPSS)<br>- Visualisations initiales (prix, rendements)<br>- Nettoyage et export des datasets préparés |
-| **En-Nasry** | Modélisation GARCH et extensions | - Implémentation du modèle `GARCH(1,1)` avec `arch`<br>- Estimation des paramètres (ω, α, - Visualisation de la volatilité conditionnelle<br>- Optionnel : EGARCH ou GJR-GARCH<br>- Export des résultats dans `figures/` et `data/` |
-| **El Alami** | Modélisation LSTM | - Préparation des séquences temporelles<br>- Construction et entraînement du réseau LSTM (TensorFlow/Keras)- Ajustement des hyperparamètres<br>- Visualisation des courbes de perte et des prévisions<br>- Sauvegarde du modèle entraîné |
-| **Marwa Takatri** | Évaluation & Synthèse du projet | - Comparaison GARCH vs LSTM (RMSE, MSE, Log-Likelihood)<br>- Implémentation du **test de Diebold–Mariano**
+| **Takatri Marwa** | Modélisation GARCH et extensions | - Implémentation du modèle `GARCH(1,1)` avec `arch`<br>- Estimation des paramètres (ω, α, - Visualisation de la volatilité conditionnelle<br>- Optionnel : EGARCH ou GJR-GARCH<br>- Export des résultats dans `figures/` et `data/` |
+| **El Alami Salma** | Modélisation LSTM | - Préparation des séquences temporelles<br>- Construction et entraînement du réseau LSTM (TensorFlow/Keras)- Ajustement des hyperparamètres<br>- Visualisation des courbes de perte et des prévisions<br>- Sauvegarde du modèle entraîné |
+| **En-Nasry Salma** | Évaluation & Synthèse du projet | - Comparaison GARCH vs LSTM (RMSE, MSE, Log-Likelihood)<br>- Implémentation du **test de Diebold–Mariano**
 
 
 ## Technologies utilisées
