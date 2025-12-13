@@ -1,0 +1,76 @@
+## Résumé du travail effectué
+
+J'ai complété la modélisation GARCH pour la prévision de la volatilité financière sur deux assets: **S&P 500** et **Bitcoin**.
+
+
+
+## Fichiers créés/modifiés
+
+- **`notebooks/notebook_modelisation_garch.ipynb`** → Analyse complète avec interprétations
+- **`src/garch_model.py`** → Script réutilisable pour les modèles GARCH
+- **`figures/garch_volatility.png`** → Visualisations des volatilités
+- **`data/sample/GSPC_volatility_garch.csv`** → Volatilités prédites S&P 500
+- **`data/sample/BTCUSD_volatility_garch.csv`** → Volatilités prédites Bitcoin
+
+
+
+## Résultats principaux
+
+### S&P 500 - GARCH(1,1)
+- **ω = 0.00000356** (volatilité de base très faible)
+- **α = 0.2002** (20% de réaction aux chocs)
+- **β = 0.7801** (78% de persistance)
+- **α + β = 0.9803** → Volatilité très stable et prévisible
+
+### Bitcoin - GARCH(1,1)
+- **ω = 0.0001242** (volatilité de base beaucoup plus élevée)
+- **α = 0.1000** (10% de réaction aux chocs)
+- **β = 0.8000** (80% de persistance)
+- **α + β = 0.9000** → Bitcoin plus chaotique naturellement mais volatilité stable
+
+### EGARCH - Asymétrie
+- S&P 500 EGARCH: Log-Likelihood = 5581.52 (légèrement pire que GARCH)
+- Bitcoin EGARCH: Log-Likelihood = 5019.64 (légèrement mieux que GARCH)
+- Conclusion: Les deux assets n'ont pas beaucoup d'asymétrie, GARCH simple suffit
+
+
+## Validation des résidus (Test Ljung-Box)
+
+| Modèle | Asset | P-value | Verdict |
+|--------|-------|---------|---------|
+| GARCH | S&P 500 | 0.6758 | Bon |
+| GARCH | Bitcoin | 0.707 | Bon |
+| EGARCH | S&P 500 | 0.7451 | Bon |
+
+Tous les p-values > 0.05 → Les modèles ont bien capturé la volatilité, pas d'autocorrélation dans les résidus.
+
+
+
+## Données générées pour LSTM
+
+Les volatilités prédites par GARCH sont sauvegardées dans:
+- `data/sample/GSPC_volatility_garch.csv` (3 colonnes: date, log_return, volatility_garch)
+- `data/sample/BTCUSD_volatility_garch.csv` (même structure)
+
+Ces fichiers contiennent la volatilité conditionnelle prédite qu'on peut comparer avec les prévisions LSTM.
+
+
+
+## Prochaines étapes pour LSTM
+
+Pour comparer GARCH vs LSTM, vous aurez besoin de:
+1. Charger les volatilités GARCH générées
+2. Implémenter un modèle LSTM univarié
+3. Calculer les métriques: RMSE, MAE, MAPE
+4. Appliquer le test de Diebold-Mariano pour la comparaison statistique
+
+
+
+## Notes techniques
+
+- Code réutilisable: Le script `src/garch_model.py` peut être réexécuté pour regénérer les volatilités
+- Chemins: Les données sont dans `data/sample/`, les figures dans `figures/`
+- Dépendances: arch, numpy, pandas, matplotlib, statsmodels
+
+
+Branche: `modelisation_garch`
