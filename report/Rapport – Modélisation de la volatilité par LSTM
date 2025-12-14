@@ -1,0 +1,132 @@
+1. Introduction
+
+Dans le cadre du projet de prévision de la volatilité financière, cette partie est consacrée à l’implémentation d’un modèle LSTM (Long Short-Term Memory).
+L’objectif est de comparer cette approche basée sur l’apprentissage profond aux modèles économétriques traditionnels de type GARCH, en évaluant leur capacité à prévoir la volatilité future des marchés financiers.
+
+Le modèle LSTM est appliqué à deux actifs présentant des dynamiques de volatilité différentes :
+
+le Bitcoin (BTC-USD), actif fortement volatil,
+
+l’indice S&P 500 (^GSPC), représentant un marché plus stable.
+
+2. Données utilisées
+
+Les données utilisées proviennent des fichiers :
+
+BTC-USD_sample.csv
+
+GSPC_sample.csv
+
+Pour chaque actif, les variables suivantes sont disponibles :
+
+les prix (open, high, low, close),
+
+les rendements logarithmiques,
+
+la volatilité réalisée sur 20 jours (rv20).
+
+La variable rv20 est utilisée comme variable cible, car elle constitue un proxy observable de la volatilité conditionnelle et permet une comparaison directe avec les modèles GARCH.
+
+3. Méthodologie
+3.1 Prétraitement des données
+
+Les étapes de prétraitement sont les suivantes :
+
+suppression des valeurs manquantes,
+
+conversion de la date en index temporel,
+
+séparation chronologique des données en deux échantillons :
+
+80 % pour l’entraînement,
+
+20 % pour le test,
+
+normalisation des données à l’aide d’un Min-Max Scaler, ajusté uniquement sur l’échantillon d’entraînement afin d’éviter toute fuite d’information.
+
+3.2 Construction des séquences temporelles
+
+La série de volatilité réalisée est transformée en un problème supervisé à l’aide d’une fenêtre glissante :
+
+les 20 dernières valeurs de rv20 constituent l’entrée du modèle,
+
+la valeur suivante de rv20 correspond à la sortie à prédire.
+
+Cette approche permet au modèle LSTM de capturer la dépendance temporelle et le phénomène de volatility clustering.
+
+3.3 Architecture du modèle LSTM
+
+Le modèle LSTM utilisé est univarié et comprend :
+
+une couche LSTM de 50 neurones,
+
+une couche Dense avec une sortie unique,
+
+une fonction de perte Mean Squared Error (MSE),
+
+l’optimiseur Adam.
+
+L’entraînement est réalisé sur 30 epochs avec une taille de batch de 32 observations.
+
+4. Résultats empiriques
+4.1 Résultats pour le Bitcoin (BTC-USD)
+
+Les performances obtenues sont les suivantes :
+
+RMSE ≈ 0.00223
+
+MAE ≈ 0.00156
+
+Les résultats montrent que le modèle LSTM parvient à capturer les régimes de volatilité du Bitcoin.
+Les périodes de forte volatilité sont correctement identifiées, bien que les pics extrêmes soient légèrement lissés, ce qui est une caractéristique courante des modèles de prévision de la volatilité.
+
+4.2 Résultats pour le S&P 500 (^GSPC)
+
+Pour l’indice S&P 500, les performances sont :
+
+RMSE ≈ 0.00063
+
+MAE ≈ 0.00045
+
+Le modèle LSTM fournit des prévisions très proches de la volatilité réalisée.
+La dynamique plus stable du marché actions permet une meilleure capacité de généralisation du modèle.
+
+5. Analyse et interprétation
+
+L’analyse comparative met en évidence plusieurs éléments :
+
+le modèle LSTM capture efficacement le phénomène de volatility clustering,
+
+les performances sont meilleures sur le S&P 500 que sur le Bitcoin, en raison d’une volatilité plus régulière,
+
+le LSTM présente une bonne capacité d’adaptation aux relations non linéaires présentes dans les séries financières.
+
+Ces observations sont cohérentes avec les résultats généralement rapportés dans la littérature académique.
+
+6. Comparaison avec les modèles GARCH
+
+Contrairement aux modèles GARCH, qui reposent sur une structure paramétrique et une interprétation économétrique claire, le modèle LSTM offre une approche plus flexible basée sur l’apprentissage des dépendances temporelles complexes.
+
+Les résultats obtenus suggèrent que le LSTM constitue une alternative pertinente aux modèles GARCH pour la prévision de la volatilité, en particulier sur des marchés relativement stables.
+Une comparaison statistique plus approfondie pourra être menée à l’aide de métriques communes et du test de Diebold–Mariano.
+
+7. Limites et perspectives
+
+Certaines limites peuvent être soulignées :
+
+le modèle est univarié et ne prend pas en compte d’autres variables explicatives,
+
+la validation est effectuée sur un seul découpage temporel.
+
+Des extensions possibles incluent :
+
+l’utilisation de modèles multivariés,
+
+une validation de type walk-forward,
+
+des architectures hybrides combinant GARCH et réseaux neuronaux.
+
+8. Conclusion
+
+Cette étude montre que le modèle LSTM est capable de fournir des prévisions précises de la volatilité financière à court terme.
+Il constitue un outil complémentaire aux modèles GARCH et offre des perspectives intéressantes pour l’analyse et la prévision des marchés financiers.
