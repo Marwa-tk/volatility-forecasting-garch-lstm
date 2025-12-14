@@ -1,1 +1,49 @@
+##Résumé du travail effectué
 
+J’ai réalisé l’étape de prétraitement des données financières en vue de la prévision de la volatilité pour deux actifs représentatifs : S&P 500 (^GSPC) et Bitcoin (BTC-USD).
+→ Cette étape comprend le téléchargement des données de prix, le calcul des rendements logarithmiques, la construction d’une mesure de volatilité réalisée et la vérification de la stationnarité des séries, condition indispensable pour la modélisation GARCH et LSTM.
+
+##Fichiers créés/modifiés
+
+- src/step_1/preprocess_data.sh → Script de prétraitement automatisé (téléchargement, calculs, tests)
+- data/sample/GSPC_sample.csv → Données brutes S&P 500
+- data/sample/BTC-USD_sample.csv → Données brutes Bitcoin
+- data/processed/GSPC.parquet → Données prétraitées S&P 500
+- data/processed/BTC-USD.parquet → Données prétraitées Bitcoin
+- figures/GSPC_overview.png → Prix et rendements logarithmiques du S&P 500
+- figures/BTC-USD_overview.png → Prix et rendements logarithmiques du Bitcoin
+
+##Résultats principaux
+
+Calcul des rendements et volatilité
+Les rendements logarithmiques ont été calculés à partir des prix de clôture.
+Une volatilité réalisée sur 20 jours (rv20) a été estimée via l’écart-type glissant des rendements.
+Les rendements présentent une moyenne proche de zéro et une variance variable dans le temps, particulièrement marquée pour le Bitcoin.
+
+##Tests de stationnarité
+*S&P 500 (^GSPC)
+ADF p-value < 0.05 → rejet de la non-stationnarité
+KPSS p-value ≥ 0.05 → stationnarité non rejetée
+→ Les rendements sont stationnaires
+*Bitcoin (BTC-USD)
+ADF p-value < 0.05 → rejet de la non-stationnarité
+KPSS p-value ≥ 0.05 → stationnarité non rejetée
+→ Les rendements sont stationnaires
+
+##Conclusion :
+
+Les rendements logarithmiques des deux actifs sont stationnaires, ce qui valide leur utilisation dans les modèles GARCH et LSTM.
+
+##Analyse graphique: 
+
+→ Les prix montrent des tendances marquées et des cycles de long terme.
+→ Les rendements logarithmiques fluctuent autour de zéro sans tendance.
+→ Le Bitcoin présente une volatilité nettement plus élevée et irrégulière que le S&P 500.
+→ Un choc de volatilité majeur est observable autour de 2020 (crise COVID) pour les deux actifs.
+→ Données générées pour la suite (GARCH & LSTM)
+
+##Notes techniques
+
+→ Script automatisé et réexécutable
+→ Données stockées en formats CSV et Parquet (optimisé)
+→ Dépendances principales : yfinance, numpy, pandas, matplotlib, statsmodels
