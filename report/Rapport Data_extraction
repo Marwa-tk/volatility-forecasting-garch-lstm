@@ -8,8 +8,6 @@ J’ai réalisé l’étape de prétraitement des données financières en vue d
 - src/step_1/preprocess_data.sh → Script de prétraitement automatisé (téléchargement, calculs, tests)
 - data/sample/GSPC_sample.csv → Données brutes S&P 500
 - data/sample/BTC-USD_sample.csv → Données brutes Bitcoin
-- data/processed/GSPC.parquet → Données prétraitées S&P 500
-- data/processed/BTC-USD.parquet → Données prétraitées Bitcoin
 - figures/GSPC_overview.png → Prix et rendements logarithmiques du S&P 500
 - figures/BTC-USD_overview.png → Prix et rendements logarithmiques du Bitcoin
 
@@ -47,3 +45,5 @@ Les rendements logarithmiques des deux actifs sont stationnaires, ce qui valide 
 → Script automatisé et réexécutable
 → Données stockées en formats CSV et Parquet (optimisé)
 → Dépendances principales : yfinance, numpy, pandas, matplotlib, statsmodels
+
+Branche : feat/step_1-preprocessing
